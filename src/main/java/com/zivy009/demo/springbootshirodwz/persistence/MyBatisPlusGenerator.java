@@ -18,7 +18,7 @@ import java.util.Map;
  * mybatis-plus代码生成器(用于生成entity)<br>
  * 注意:<br>
  *     因为没用mybatis-plus的Service和Controller所以生成完之后要删掉TTT目录
- * @author stylefeng
+ * @author  
  * @Date 2017/5/21 12:38
  */
 public class MyBatisPlusGenerator {

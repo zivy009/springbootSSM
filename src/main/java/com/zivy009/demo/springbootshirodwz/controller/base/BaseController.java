@@ -20,7 +20,13 @@ public class BaseController {
     protected String ajaxSuccess() {
         return ajaxSuccessforCurpage("操作成功", null);
     }
-
+    protected String ajaxTimeout() {
+        JSONObject obj = new JSONObject();
+        obj.put("statusCode", 301);
+        obj.put("message", "访问超时");
+       // obj.put("forwardUrl", "/login");
+        return obj.toString();
+    }
     /**
      * 
      * 

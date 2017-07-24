@@ -7,7 +7,12 @@
 <title>管理平台</title>
 <link href="${ctx.contextPath}/dwz/themes/css/login.css" rel="stylesheet" type="text/css" />
 </head>
-
+<script type="text/javascript">    
+      
+    function change(obj){
+     obj.src= '${ctx.contextPath}/defaultKaptcha?' + Math.floor(Math.random()*100);
+    }  
+</script>  
 <body>
 	<div id="login">
 		<div id="login_header">
@@ -23,7 +28,7 @@
 		</div>
 		<div id="login_content">
 			<div class="loginForm">
-				<form action="index.html">
+				<form action="${ctx.contextPath}/loginDo">
 					<p>
 						<label>用户名：</label>
 						<input type="text" name="username" size="20" class="login_input" />
@@ -34,21 +39,29 @@
 					</p>
 					<p>
 						<label>验证码：</label>
-						<input class="code" type="text" size="5" />
-						<span><img src="${ctx.contextPath}/defaultKaptcha" onClick="${ctx.contextPath}/defaultKaptcha?d=\'+new Date()*1'" alt="" width="75" height="24" /></span>
+						<input class="code" name="verifyCode"  type="text" size="5" />
+						<span><img src="${ctx.contextPath}/defaultKaptcha" style="cursor:hand"   onClick="change(this);" alt="" width="75" height="24" /></span>
 					</p>
 					<div class="login_bar">
 						<input class="sub" type="submit" value=" " />
 					</div>
 				</form>
+				<div>
+			 
+				</div>
+				<div style="color:red"><br/>
+				 ${(RequestParameters.errormsg)!""}
+				</div>
 			</div>
-			<div class="login_banner"><img src="${ctx.contextPath}/dwz/themes/default/images/login_banner.jpg" /></div>
+			<div class="login_banner">
+			<img src="${ctx.contextPath}/dwz/themes/default/images/login_banner.jpg" />
+			 
+			</div>
 			<div class="login_main">
 			 
 				<div class="login_inner">
 			 
-			 
-	 
+ 
 			 
 				</div>
 			</div>

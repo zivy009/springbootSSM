@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zivy009.demo.springbootshirodwz.persistence.dao.SchemaVersionMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.zivy009.demo.springbootshirodwz.persistence.model.SchemaVersion">
+		<id column="version" property="version" />
+		<result column="version_rank" property="versionRank" />
+		<result column="installed_rank" property="installedRank" />
+		<result column="description" property="description" />
+		<result column="type" property="type" />
+		<result column="script" property="script" />
+		<result column="checksum" property="checksum" />
+		<result column="installed_by" property="installedBy" />
+		<result column="installed_on" property="installedOn" />
+		<result column="execution_time" property="executionTime" />
+		<result column="success" property="success" />
+	</resultMap>
+
+</mapper>

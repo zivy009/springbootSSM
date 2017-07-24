@@ -66,8 +66,8 @@
 <script type="text/javascript">
 $(function(){
 	DWZ.init("dwz/dwz.frag.xml", {
-		loginUrl:"login_dialog.html", loginTitle:"登录",	// 弹出登录对话框
-//		loginUrl:"login.html",	// 跳到登录页面
+		//loginUrl:"login_dialog.html", loginTitle:"登录",	// 弹出登录对话框
+	 	loginUrl:"${ctx.contextPath}/login",	// 跳到登录页面
 		statusCode:{ok:200, error:300, timeout:301}, //【可选】
 		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //【可选】
 		keys: {statusCode:"statusCode", message:"message"}, //【可选】
