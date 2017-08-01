@@ -10,7 +10,7 @@
 <script type="text/javascript">    
       
     function change(obj){
-     obj.src= '${ctx.contextPath}/defaultKaptcha?' + Math.floor(Math.random()*100);
+     obj.src= '${ctx.contextPath}/login/defaultKaptcha?' + Math.floor(Math.random()*100);
     }  
 </script>  
 <body>
@@ -40,7 +40,7 @@
 					<p>
 						<label>验证码：</label>
 						<input class="code" name="verifyCode"  type="text" size="5" />
-						<span><img src="${ctx.contextPath}/defaultKaptcha" style="cursor:hand"   onClick="change(this);" alt="" width="75" height="24" /></span>
+						<span><img src="${ctx.contextPath}/login/defaultKaptcha" style="cursor:hand"   onClick="change(this);" alt="" width="75" height="24" /></span>
 					</p>
 					<div class="login_bar">
 						<input class="sub" type="submit" value=" " />

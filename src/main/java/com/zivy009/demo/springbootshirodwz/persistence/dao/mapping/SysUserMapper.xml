@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zivy009.demo.springbootshirodwz.persistence.dao.SysUserMapper">
+<mapper
+	namespace="com.zivy009.demo.springbootshirodwz.persistence.dao.SysUserMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.zivy009.demo.springbootshirodwz.persistence.model.SysUser">
+	<resultMap id="BaseResultMap"
+		type="com.zivy009.demo.springbootshirodwz.persistence.model.SysUser">
 		<id column="id" property="id" />
 		<result column="login_name" property="loginName" />
 		<result column="name" property="name" />
@@ -12,5 +14,7 @@
 		<result column="addtime" property="addtime" />
 		<result column="disabled" property="disabled" />
 	</resultMap>
-
+	<select id="countRow" resultType="java.lang.Integer">
+		select count(*) from sys_user
+	</select>
 </mapper>

@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @since 2017-07-21
  */
 @TableName("sys_user")
-public class SysUser extends Model<SysUser> {
+public class SysUser extends Model<SysUser> implements Serializable  {
 
     private static final long serialVersionUID = 1L;
 

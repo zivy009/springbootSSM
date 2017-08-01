@@ -10,8 +10,8 @@ import com.zivy009.demo.springbootshirodwz.common.support.CollectionKit;
 import com.zivy009.demo.springbootshirodwz.common.support.HttpKit;
 import com.zivy009.demo.springbootshirodwz.common.util.SpringContextHolder;
 import com.zivy009.demo.springbootshirodwz.listener.ConfigListener;
+import com.zivy009.demo.springbootshirodwz.persistence.model.SysUser;
 import com.zivy009.demo.springbootshirodwz.shiro.ShiroKit;
-import com.zivy009.demo.springbootshirodwz.shiro.ShiroUser;
 
 /**
  * 权限自定义检查
@@ -27,7 +27,7 @@ public class PermissionCheckFactory implements ICheck {
 
     @Override
     public boolean check(Object[] permissions) {
-        ShiroUser user = ShiroKit.getUser();
+        SysUser user = ShiroKit.getUser();
         if (null == user) {
             return false;
         }
@@ -41,7 +41,7 @@ public class PermissionCheckFactory implements ICheck {
     @Override
     public boolean checkAll() {
         HttpServletRequest request = HttpKit.getRequest();
-        ShiroUser user = ShiroKit.getUser();
+        SysUser user = ShiroKit.getUser();
         if (null == user) {
             return false;
         }

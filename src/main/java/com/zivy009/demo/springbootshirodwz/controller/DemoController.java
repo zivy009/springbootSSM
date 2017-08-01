@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.zivy009.demo.springbootshirodwz.common.PageHandler;
 import com.zivy009.demo.springbootshirodwz.common.http.RequestUtil;
 import com.zivy009.demo.springbootshirodwz.controller.base.BaseController;
+import com.zivy009.demo.springbootshirodwz.persistence.dao.SysUserMapper;
 import com.zivy009.demo.springbootshirodwz.persistence.model.ZzDemo;
 import com.zivy009.demo.springbootshirodwz.service.DemoService;
 
@@ -28,12 +28,13 @@ import com.zivy009.demo.springbootshirodwz.service.DemoService;
 @Controller
 @RequestMapping(value = "/demo")
 public class DemoController extends BaseController {
-
+    
     @Autowired
     DemoService demoService;
     String viewRoot = "demo";
 
     @RequestMapping("/list")
+    @RequiresPermissions("demo:list")
     protected String list(Model model, HttpServletRequest request, @RequestParam(value = "pageNum", defaultValue = "1") int pageIndex,
             @RequestParam(value = "numPerPage", defaultValue = "5") int pageSize) {
 

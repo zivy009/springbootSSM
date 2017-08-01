@@ -10,5 +10,5 @@
 		<result column="description" property="description" />
 		<result column="type" property="type" />
 	</resultMap>
-
+ 
 </mapper>

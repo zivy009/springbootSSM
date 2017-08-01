@@ -156,6 +156,17 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+			<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<!-- freemark中用shiro https://github.com/ming-soft/shiro-freemarker-tags  -->
+		<dependency>
+            <groupId>net.mingsoft</groupId>
+            <artifactId>shiro-freemarker-tags</artifactId>
+            <version>0.1</version>
+        </dependency>
 		<!-- ehcache 缓存 -->
 		<dependency>
 			<groupId>org.ehcache</groupId>

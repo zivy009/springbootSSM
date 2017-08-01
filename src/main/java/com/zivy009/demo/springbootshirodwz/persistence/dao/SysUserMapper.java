@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @since 2017-07-21
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
-
+int countRow();
 }

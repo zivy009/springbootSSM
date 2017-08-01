@@ -2,11 +2,12 @@ package com.zivy009.demo.springbootshirodwz.config;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
-import org.apache.shiro.realm.text.TextConfigurationRealm;
+import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -17,12 +18,11 @@ import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import com.zivy009.demo.springbootshirodwz.config.properties.ComProperties;
 import com.zivy009.demo.springbootshirodwz.shiro.ShiroDbRealm;
@@ -36,26 +36,28 @@ import com.zivy009.demo.springbootshirodwz.shiro.ShiroDbRealm;
 @Configuration
 // @Order(1)
 public class ShiroConfig {
-    private Integer sessionInvalidateTime = 30 * 60;  //session 失效时间（默认为30分钟 单位：秒）
-    private Integer sessionValidationInterval = 15 * 60;  //session 验证失效时间（默认为15分钟 单位：秒）
+    private Integer sessionInvalidateTime = 30 * 60; // session 失效时间（默认为30分钟
+                                                     // 单位：秒）
+    private Integer sessionValidationInterval = 15 * 60; // session
+                                                         // 验证失效时间（默认为15分钟 单位：秒）
+
     /**
      * 安全管理器
      */
-//     @Bean
-//     public DefaultWebSecurityManager securityManager(CookieRememberMeManager
-//     rememberMeManager, CacheManager cacheShiroManager,
-//     DefaultWebSessionManager defaultWebSessionManager) {
-//     DefaultWebSecurityManager securityManager = new
-//     DefaultWebSecurityManager();
-//     securityManager.setRealm(this.shiroDbRealm());
-//     securityManager.setCacheManager(cacheShiroManager);
-//     securityManager.setRememberMeManager(rememberMeManager);
-//     securityManager.setSessionManager(defaultWebSessionManager);
-//     return securityManager;
-//     }
+    // @Bean
+    // public DefaultWebSecurityManager securityManager(CookieRememberMeManager
+    // rememberMeManager, CacheManager cacheShiroManager,
+    // DefaultWebSessionManager defaultWebSessionManager) {
+    // DefaultWebSecurityManager securityManager = new
+    // DefaultWebSecurityManager();
+    // securityManager.setRealm(this.shiroDbRealm());
+    // securityManager.setCacheManager(cacheShiroManager);
+    // securityManager.setRememberMeManager(rememberMeManager);
+    // securityManager.setSessionManager(defaultWebSessionManager);
+    // return securityManager;
+    // }
     @Bean
-    public DefaultWebSecurityManager securityManager(TextConfigurationRealm realm,CookieRememberMeManager
-            rememberMeManager, CacheManager cacheShiroManager,
+    public DefaultWebSecurityManager securityManager(ShiroDbRealm realm, CookieRememberMeManager rememberMeManager, CacheManager cacheShiroManager,
             DefaultWebSessionManager defaultWebSessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(realm);
@@ -64,18 +66,21 @@ public class ShiroConfig {
         securityManager.setCacheManager(cacheShiroManager);
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(defaultWebSessionManager);
-        
+
         return securityManager;
     }
-    
+
     @Bean
-    public TextConfigurationRealm shiroDbRealm() {
-        TextConfigurationRealm textConfigurationRealm = new TextConfigurationRealm();
-        textConfigurationRealm.addAccount("zivy", "zivy123");
-        return textConfigurationRealm;
+    public IniRealm makeIniRealm() {
+
+        IniRealm iniRealm = new IniRealm("classpath:shiro_users.ini");
+
+        return iniRealm;
     }
+
+   
     /**
-     * session管理器
+     * session管理器credentialsMatcher
      */
     @Bean
     public DefaultWebSessionManager defaultWebSessionManager(CacheManager cacheShiroManager, ComProperties comProperties) {
@@ -102,14 +107,13 @@ public class ShiroConfig {
         return ehCacheManager;
     }
 
-    /**
-     * 项目自定义的Realm
-     */
-    // @Bean
-    // public ShiroDbRealm shiroDbRealm() {
-    // return new ShiroDbRealm();
-    // }
- 
+//    /**
+//     * 项目自定义的Realm
+//     */
+//     @Bean
+//     public ShiroDbRealm shiroDbRealm() {
+//     return new ShiroDbRealm();
+//     }
 
     /**
      * rememberMe管理器, cipherKey生成见{@code Base64Test.java}
@@ -140,11 +144,12 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
+
         /**
          * 默认的登陆访问url
          */
         shiroFilter.setLoginUrl("/login");
-         
+
         /**
          * 登陆成功后跳转的url
          */
@@ -152,7 +157,8 @@ public class ShiroConfig {
         /**
          * 没有权限跳转的url
          */
-      //  shiroFilter.setUnauthorizedUrl("/global/error");
+         
+       shiroFilter.setUnauthorizedUrl("/unauthorized");// 只有在authorizationFilter 下好用。否则用异常映射view
         /**
          * 配置shiro拦截器链
          *
@@ -160,15 +166,15 @@ public class ShiroConfig {
          *
          */
         Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("/logout", "logout");
+        /******* 静态资源 *********************/
         hashMap.put("/static/**", "anon");
         hashMap.put("/dwz/**", "anon");
-        hashMap.put("/login", "anon");
-        hashMap.put("/loginDo", "anon");
+        /******* 登录相关 *********************/
+        hashMap.put("/login**", "anon");
         hashMap.put("/login/**", "anon");
-        
-        //hashMap.put("/global/sessionError", "anon");
-        hashMap.put("/kaptcha", "anon");
-        hashMap.put("/defaultKaptcha", "anon");
+        /******* 其他 *********************/
+        // hashMap.put("/global/sessionError", "anon");
         hashMap.put("/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
@@ -182,32 +188,63 @@ public class ShiroConfig {
 //        MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
 //        bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
 //        bean.setArguments(new Object[] { securityManager });
+//        
 //        return bean;
 //    }
 
     /**
      * 保证实现了Shiro内部lifecycle函数的bean执行
      */
-//    @Bean
-//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-//        return new LifecycleBeanPostProcessor();
-//    }
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
 
-//    /**
-//     * 启用shrio授权注解拦截方式，AOP式方法级权限检查
-//     */
-//    @Bean
-//    @DependsOn(value = "lifecycleBeanPostProcessor") // 依赖其他bean的初始化
-//    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-//        return new DefaultAdvisorAutoProxyCreator();
-//    }
+    /**
+     * 启用shrio授权注解拦截方式，AOP式方法级权限检查
+     */
+    @Bean
+    @DependsOn(value = "lifecycleBeanPostProcessor") // 依赖其他bean的初始化
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
 
-//    @Bean
-//    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
-//        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-//        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
-//        return authorizationAttributeSourceAdvisor;
-//    }
+    /**
+     * 注解拦截用
+     * 
+     * @author zivy
+     * @date 2017年7月25日
+     * @describe
+     * @param securityManager
+     * @return
+     *
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+
+        return authorizationAttributeSourceAdvisor;
+    }
+    /**
+     * 配置不同异常的错误页面
+     * 
+     *@author zivy
+     *@date 2017年7月25日
+     *@describe
+     *@return
+     *
+     */
+    @Bean
+    public SimpleMappingExceptionResolver makeSimpleMappingExceptionResolver(){
+        SimpleMappingExceptionResolver simpleMappingExceptionResolver=new SimpleMappingExceptionResolver();
+        Properties properties=new Properties();
+        properties.setProperty("org.apache.shiro.authz.UnauthorizedException", "/unauthorized");
+        simpleMappingExceptionResolver.setExceptionMappings(properties);
+        return simpleMappingExceptionResolver;
+    }
     /**
      * 限制同一账号登录同时登录人数控制
      * 

@@ -14,6 +14,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
+
+import com.zivy009.demo.springbootshirodwz.persistence.tools.other.CommonProvider;
 /**
  * 1、得到sql 语句 用GenerateSqle.java
  * 2、传入执行   
@@ -21,7 +23,7 @@ import org.apache.ibatis.annotations.UpdateProvider;
  * @author hongcai
  *
  */
-@Mapper
+
 public interface CommonMapper {
 
     @SelectProvider(type = CommonProvider.class, method = "sql")

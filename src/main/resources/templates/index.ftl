@@ -89,7 +89,7 @@ $(function(){
 				<a class="logo" href="http://j-ui.com">标志</a>
 				<ul class="nav">
 					<li><a href="" target="dialog" width="600">个人信息</a></li>
-					<li><a href="login.html">退出</a></li>
+					<li><a href="${ctx.contextPath}/logout">退出</a></li>
 				</ul> 
 				<ul class="themeList" id="themeList">
 					<li theme="default"><div class="selected">蓝色</div></li>
@@ -127,9 +127,19 @@ $(function(){
 					 
 								</ul>
 							</li>
-						 
-							<li><a href="demo/list" target="navTab" rel="demo">demo</a></li>
+						 <li><@shiro.hasPermission name="demo:list">有权限 </@shiro.hasPermission></li>
+							<li><a href="demo/list" target="navTab" rel="demo"><@shiro.hasRole name="admin">有</@shiro.hasRole>demo</a></li>
+						<li>
+						<a >系统管理</a>
+								<ul>
+									<li><a href="main.html" target="navTab" rel="main">后台用户</a></li>
+									<li><a href="http://www.baidu.com" target="navTab" rel="page1">功能权限</a></li>
+									<li><a href="main.html" target="navTab" rel="main">角色管理</a></li>
+					 
+								</ul>
+						</li>
 						</ul>
+						 
 					</div>
 				 
 					 

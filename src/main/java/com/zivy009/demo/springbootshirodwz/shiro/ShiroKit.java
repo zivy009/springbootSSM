@@ -7,6 +7,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 
+import com.zivy009.demo.springbootshirodwz.persistence.model.SysUser;
+
 import java.util.Random;
 
 /**
@@ -39,7 +41,9 @@ public class ShiroKit {
         ByteSource salt = new Md5Hash(saltSource);
         return new SimpleHash(hashAlgorithmName, credentials, salt, hashIterations).toString();
     }
-
+public static void main(String[] args) {
+    System.out.println(ShiroKit.md5("zivy", "zivy"));
+}
     /**
      * 获取随机盐值
      * @param length
@@ -66,15 +70,15 @@ public class ShiroKit {
     }
 
     /**
-     * 获取封装的 ShiroUser
+     * 获取封装的  
      *
-     * @return ShiroUser
+     * @return  
      */
-    public static ShiroUser getUser() {
+    public static SysUser getUser() {
         if (isGuest()) {
             return null;
         } else {
-            return (ShiroUser) getSubject().getPrincipals().getPrimaryPrincipal();
+            return (SysUser) getSubject().getPrincipals().getPrimaryPrincipal();
         }
     }
 
@@ -151,6 +155,7 @@ public class ShiroKit {
             for (String role : roleNames.split(NAMES_DELIMETER)) {
                 if (subject.hasRole(role.trim())) {
                     hasAnyRole = true;
+                     
                     break;
                 }
             }

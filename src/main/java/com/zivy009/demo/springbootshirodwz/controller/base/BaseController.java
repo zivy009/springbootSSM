@@ -23,7 +23,14 @@ public class BaseController {
     protected String ajaxTimeout() {
         JSONObject obj = new JSONObject();
         obj.put("statusCode", 301);
-        obj.put("message", "访问超时");
+        obj.put("message", "登录过期");
+       // obj.put("forwardUrl", "/login");
+        return obj.toString();
+    }
+    protected String ajaxUnauthorized() {
+        JSONObject obj = new JSONObject();
+        obj.put("statusCode", 200);
+        obj.put("message", "无权访问");
        // obj.put("forwardUrl", "/login");
         return obj.toString();
     }

@@ -14,7 +14,7 @@ import com.zivy009.demo.springbootshirodwz.common.tools.StringUtil;
 import com.zivy009.demo.springbootshirodwz.persistence.dao.ZzDemoMapper;
 import com.zivy009.demo.springbootshirodwz.persistence.model.ZzDemo;
 import com.zivy009.demo.springbootshirodwz.persistence.tools.CommonMapper;
-import com.zivy009.demo.springbootshirodwz.persistence.tools.GenerateSQL;
+import com.zivy009.demo.springbootshirodwz.persistence.tools.other.GenerateSQL;
 
 /**
  * @author zivy

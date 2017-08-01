@@ -1,18 +1,19 @@
 package com.zivy009.demo.springbootshirodwz.persistence;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * mybatis-plus代码生成器(用于生成entity)<br>
@@ -35,8 +36,10 @@ public class MyBatisPlusGenerator {
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(false);// XML columList
         gc.setAuthor("zivy");
+        
+        gc.setServiceImplName("%sService");
         mpg.setGlobalConfig(gc);
-
+    
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
@@ -54,7 +57,7 @@ public class MyBatisPlusGenerator {
         dsc.setPassword("campus123"); 
         dsc.setUrl("jdbc:mysql://112.126.90.223:3306/test?characterEncoding=utf8");
         mpg.setDataSource(dsc);
-
+         
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         //strategy.setTablePrefix(new String[]{"_"});// 此处可以修改为您的表前缀
@@ -67,9 +70,9 @@ public class MyBatisPlusGenerator {
         pc.setEntity("com.zivy009.demo.springbootshirodwz.persistence.model");
         pc.setMapper("com.zivy009.demo.springbootshirodwz.persistence.dao");
         pc.setXml("com.zivy009.demo.springbootshirodwz.persistence.dao.mapping");
-        pc.setService("TTT");       //本项目没用，生成之后删掉
-        pc.setServiceImpl("TTT");   //本项目没用，生成之后删掉
-        pc.setController("TTT");    //本项目没用，生成之后删掉
+        pc.setService("com.zivy009.demo.springbootshirodwz.service");       //本项目没用，生成之后删掉
+        pc.setServiceImpl("com.zivy009.demo.springbootshirodwz.service.impl");   //本项目没用，生成之后删掉
+        pc.setController("com.zivy009.demo.springbootshirodwz.controller");    //本项目没用，生成之后删掉
         mpg.setPackageInfo(pc);
 
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
@@ -82,7 +85,10 @@ public class MyBatisPlusGenerator {
             }
         };
         mpg.setCfg(cfg);
-
+        // 取消某个模板的生成
+//        TemplateConfig templateConfig=new TemplateConfig();
+//        templateConfig.setService("");
+//        mpg.setTemplate(templateConfig);
         // 执行生成
         mpg.execute();
 
