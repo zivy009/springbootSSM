@@ -1,14 +1,19 @@
 package com.zivy009.demo.springbootshirodwz.controller.base;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.alibaba.fastjson.JSONObject;
+import com.zivy009.demo.springbootshirodwz.service.impl.SysUserService;
 
 /**
  * @author zivy
  * @date 2017年7月17日
  * @describe
  */
-public class BaseController {
-
+public class BaseController<S> {
+    @Autowired
+    protected  S baseService;
+    
     public BaseController() {
         // TODO Auto-generated constructor stub
     }

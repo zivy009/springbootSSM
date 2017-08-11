@@ -72,23 +72,25 @@ $(function(){
 		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //【可选】
 		keys: {statusCode:"statusCode", message:"message"}, //【可选】
 		ui:{hideMode:'offsets'}, //【可选】hideMode:navTab组件切换的隐藏方式，支持的值有’display’，’offsets’负数偏移位置的值，默认值为’display’
-		debug:false,	// 调试模式 【true|false】
+		debug:true,	// 调试模式 【true|false】
 		callback:function(){
 			initEnv();
-			$("#themeList").theme({themeBase:"themes"}); // themeBase 相对于index页面的主题base路径
+		
+			$("#themeList").theme({themeBase:"${ctx.contextPath}/dwz/themes/"}); // themeBase 相对于index页面的主题base路径
 		}
 	});
 });
 </script>
 </head>
-
+ 
 <body>
 	<div id="layout">
 		<div id="header">
 			<div class="headerNav">
 				<a class="logo" href="http://j-ui.com">标志</a>
 				<ul class="nav">
-					<li><a href="" target="dialog" width="600">个人信息</a></li>
+					<li><a href="${ctx.contextPath}/sysuser/infoself?id=${(sysuser.id)!}" target="dialog" width="600">个人信息</a></li>
+					<li><a href="${ctx.contextPath}/sysuser/updPwdSelf?id=${(sysuser.id)!}" target="dialog" width="600">修改密码</a></li>
 					<li><a href="${ctx.contextPath}/logout">退出</a></li>
 				</ul> 
 				<ul class="themeList" id="themeList">
@@ -120,24 +122,27 @@ $(function(){
 					</div>
 					<div class="accordionContent">
 						<ul class="tree treeFolder">
-							<li><a href="tabsPage.html" target="navTab">主框架面板</a>
-								<ul>
-									<li><a href="main.html" target="navTab" rel="main">我的主页</a></li>
-									<li><a href="http://www.baidu.com" target="navTab" rel="page1">页面一(外部链接)</a></li>
-					 
-								</ul>
-							</li>
-						 <li><@shiro.hasPermission name="demo:list">有权限 </@shiro.hasPermission></li>
-							<li><a href="demo/list" target="navTab" rel="demo"><@shiro.hasRole name="admin">有</@shiro.hasRole>demo</a></li>
+							 
+						 <@shiro.hasRole name="admin">	 
 						<li>
 						<a >系统管理</a>
 								<ul>
-									<li><a href="main.html" target="navTab" rel="main">后台用户</a></li>
-									<li><a href="http://www.baidu.com" target="navTab" rel="page1">功能权限</a></li>
-									<li><a href="main.html" target="navTab" rel="main">角色管理</a></li>
-					 
+								<@shiro.hasPermission name="sysuser:list">
+									<li><a href="sysuser/list" target="navTab" rel="sysuser">后台用户</a></li>
+								</@shiro.hasPermission>
+								<@shiro.hasPermission name="sysPermission:list">
+									<li><a href="sysPermission/list" target="navTab" rel="sysPermission">功能权限</a></li>
+								</@shiro.hasPermission>
+								<@shiro.hasPermission name="sysPermission:list">
+									<li><a href="sysRole/list" target="navTab" rel="sysPermission">角色管理</a></li>
+					 			</@shiro.hasPermission>
 								</ul>
 						</li>
+						</@shiro.hasRole>
+							<@shiro.hasPermission name="base:list">
+							<li><a href="demo/list" target="navTab" rel="demo">demo</a></li>
+							 </@shiro.hasPermission>
+						
 						</ul>
 						 
 					</div>

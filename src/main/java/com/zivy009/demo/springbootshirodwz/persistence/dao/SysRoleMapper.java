@@ -1,6 +1,7 @@
 package com.zivy009.demo.springbootshirodwz.persistence.dao;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
@@ -28,10 +29,12 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      *@return
      *
      */
-    @Select(value = "select * from sys_role where id in (${roleIds})")
+    @Select(value = "select * from sys_role where disabled=0 and id in (${roleIds})")
     public List<SysRole> obtainBy(@Param("roleIds") String roleIds);
     
-    @Select(value="select code from sys_role where id in (${roleIds})")
+    @Select(value="select code from sys_role where  disabled=0 and  id in (${roleIds})")
     public Set<String> obtainCodeBy(@Param("roleIds") String roleIds);
     
+    @Select(value="select id,name from sys_role where disabled=0")
+    public List<Map<String,Object>> obtainNames();
 }

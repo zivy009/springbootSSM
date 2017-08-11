@@ -3,6 +3,9 @@ package com.zivy009.demo.springbootshirodwz.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zivy009.demo.springbootshirodwz.controller.base.BaseController;
+import com.zivy009.demo.springbootshirodwz.service.impl.SchemaVersionService;
+
 /**
  * <p>
  *  前端控制器
@@ -13,6 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/schemaVersion")
-public class SchemaVersionController {
+public class SchemaVersionController extends BaseController<SchemaVersionService> {
 	
 }

@@ -15,6 +15,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.zivy009.demo.springbootshirodwz.controller.base.BaseController;
+import com.zivy009.demo.springbootshirodwz.service.impl.SysUserService;
 import com.zivy009.demo.springbootshirodwz.test.TestMap;
 
 /**
@@ -23,7 +25,7 @@ import com.zivy009.demo.springbootshirodwz.test.TestMap;
  * @describe
  */
 @Controller
-public class PublicController {
+public class PublicController extends BaseController<SysUserService> {
    
 
     public PublicController() {

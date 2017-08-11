@@ -1,5 +1,5 @@
  
-<form id="pagerForm" method="post" action="demo/list">
+<form id="pagerForm" method="post" action="sysPermission/list">
 	 
 	<input   type="hidden" name="pageNum" value="${((page.pageIndex)!0)}" />
 	<input type="hidden" name="numPerPage" value="${(page.pageSize)!}" />
@@ -9,17 +9,15 @@
  
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="demo/list" method="post">
+	<form onsubmit="return navTabSearch(this);" action="sysPermission/list" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
 				<td>
-					名称：<input type="text" name="keyword" value="${(keyword)!}" />
+					名称：<input type="text" name="keyword" />
 				</td>
 			 
-				<td>
-					添加日期：<input name="addtime" type="text" class="date" readonly="true" />
-				</td>
+				 
 			</tr>
 		</table>
 		<div class="subBar">
@@ -34,14 +32,14 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<@shiro.hasPermission name="sysRole:add">
-			<li><a class="add" href="demo/add" target="dialog" rel="save"><span>添加</span></a></li>
+			<@shiro.hasPermission name="sysPermission:add">
+			<li><a class="add" href="sysPermission/add" target="dialog" rel="save"><span>添加</span></a></li>
 			</@shiro.hasPermission>
-			<@shiro.hasPermission name="sysRole:del">
-			<li><a class="delete" href="demo/del?id={sid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<@shiro.hasPermission name="sysPermission:del">
+			<li><a class="delete" href="sysPermission/del?id={sid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 			</@shiro.hasPermission>
-			<@shiro.hasPermission name="sysRole:upd">
-			<li><a class="edit" href="demo/upd?id={sid}" target="dialog"><span>修改</span></a></li>
+			<@shiro.hasPermission name="sysPermission:upd">
+			<li><a class="edit" href="sysPermission/upd?id={sid}" target="dialog"><span>修改</span></a></li>
 			</@shiro.hasPermission>
 			<li class="line">line</li>
 		 </ul>
@@ -51,7 +49,8 @@
 			<tr>
 				<th orderField="id"  >ID</th>
 				<th>名称</th>
-				<th>时间</th>
+				<th>描述</th>
+				<th>code</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -60,9 +59,10 @@
 			<tr target="sid" rel="${a.id}">
 				<td>${a.id!}</td>
 				<td>${a.name!}</td>
-				<td>${a.addtime!?string("yyyy-MM-dd")}</td>
+				<td>${a.description!}</td>
+				<td>${a.code!}</td>
 				<td>
-					<a href="demo/del?id=${a.id}" title="确定要删除这条记录么?"  target="ajaxTodo">删除</a>
+					<a href="sysPermission/del?id=${a.id}" title="确定要删除这条记录么?"  target="ajaxTodo">删除</a>
 				</td>
 			</tr>
 			</#list> 

@@ -59,7 +59,9 @@ public static void main(String[] args) {
         }
         return sb.toString();
     }
-
+    public static String getRandomSalt() {
+        return getRandomSalt(4);
+    }
     /**
      * 获取当前 Subject
      *

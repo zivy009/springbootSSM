@@ -31,11 +31,11 @@
 				<form action="${ctx.contextPath}/loginDo">
 					<p>
 						<label>用户名：</label>
-						<input type="text" name="username" size="20" class="login_input" />
+						<input type="text" name="username" size="20" value="admin" class="login_input" />
 					</p>
 					<p>
 						<label>密码：</label>
-						<input type="password" name="password" size="20" class="login_input" />
+						<input type="password" name="password" size="20" value="123456" class="login_input" />
 					</p>
 					<p>
 						<label>验证码：</label>

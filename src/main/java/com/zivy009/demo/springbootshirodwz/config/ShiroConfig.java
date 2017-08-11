@@ -171,11 +171,12 @@ public class ShiroConfig {
         hashMap.put("/static/**", "anon");
         hashMap.put("/dwz/**", "anon");
         /******* 登录相关 *********************/
+        hashMap.put("/test", "anon");
         hashMap.put("/login**", "anon");
         hashMap.put("/login/**", "anon");
         /******* 其他 *********************/
         // hashMap.put("/global/sessionError", "anon");
-        hashMap.put("/**", "user");
+       hashMap.put("/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
     }

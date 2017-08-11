@@ -1,7 +1,6 @@
 package com.zivy009.demo.springbootshirodwz.shiro;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -50,6 +49,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         String loginName = (String) token.getPrincipal();
 
         sysUser.setLoginName(loginName);
+        sysUser.setDisabled(0);
         sysUser = sysUserMapper.selectOne(sysUser);
         if (sysUser == null) {
             throw new MyRuntimeException("用户不存在");
@@ -75,7 +75,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         Set<String> roleNameSet = new HashSet<>();
         SysUser sysUser = (SysUser) principals.getPrimaryPrincipal();
         // 1.获得这个用户的所有角色
-        List<Integer> roleIdList = sysUserRoleMapper.obtainRoldidBy(sysUser.getId());
+        Set<Integer> roleIdList = sysUserRoleMapper.obtainRoldidBy(sysUser.getId());
         // 有角色就把他的角色和相关权限添加到安全系统中
         if (roleIdList != null && roleIdList.size() > 0) {
             String roleIds = roleIdList.toString().replace("[", "").replaceAll("]", "");

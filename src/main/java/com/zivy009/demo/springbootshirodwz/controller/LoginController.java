@@ -35,7 +35,7 @@ import com.zivy009.demo.springbootshirodwz.service.impl.SysUserService;
  */
 @Controller
 @RequestMapping(value = "/")
-public class LoginController extends BaseController {
+public class LoginController extends BaseController<SysUserService> {
     @Autowired
     DefaultKaptcha defaultKaptcha;
     @Autowired

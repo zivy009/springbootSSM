@@ -3,7 +3,6 @@ package com.zivy009.demo.springbootshirodwz.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,33 +11,24 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.zivy009.demo.springbootshirodwz.common.PageHandler;
 import com.zivy009.demo.springbootshirodwz.common.tools.StringUtil;
-import com.zivy009.demo.springbootshirodwz.persistence.dao.SysRoleMapper;
-import com.zivy009.demo.springbootshirodwz.persistence.dao.SysUserRoleMapper;
-import com.zivy009.demo.springbootshirodwz.persistence.model.SysRole;
-import com.zivy009.demo.springbootshirodwz.persistence.model.SysRole;
+import com.zivy009.demo.springbootshirodwz.persistence.dao.ZzDemoMapper;
+import com.zivy009.demo.springbootshirodwz.persistence.model.ZzDemo;
 import com.zivy009.demo.springbootshirodwz.persistence.tools.CommonMapper;
 import com.zivy009.demo.springbootshirodwz.persistence.tools.other.MysqlGenerateSQL;
-import com.zivy009.demo.springbootshirodwz.service.ISysRoleService;
 
 /**
- * <p>
- * 服务实现类
- * </p>
- *
  * @author zivy
- * @since 2017-07-25
+ * @date 2017年7月10日
+ * @describe
  */
 @Service
-public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
-    @Autowired
-    SysUserRoleMapper sysUserRoleMapper;
-
-
+@Transactional
+public class DemoService extends ServiceImpl<ZzDemoMapper, ZzDemo> {
 
     @Autowired
     CommonMapper commonMapper;
 
-    String tableName = "sys_role";
+    String tableName = "zz_demo";
 
     @Transactional(readOnly = true)
     public List<Map<String, Object>> list(PageHandler page, String keyword) {
@@ -74,7 +64,7 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implemen
      * @return
      *
      */
-    public int save(SysRole entity) {
+    public int save(ZzDemo entity) {
         int rInt = baseMapper.insert(entity);
         return rInt;
     }
@@ -90,7 +80,7 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implemen
      * @return
      *
      */
-    public int del(Integer id) {
+    public int del(Long id) {
         int rInt = baseMapper.deleteById(id);
         return rInt;
     }
@@ -106,15 +96,15 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implemen
      * @return
      *
      */
-    public int delLogical(Integer id) {
-        SysRole entity = new SysRole();
+    public int delLogical(Long id) {
+        ZzDemo entity = new ZzDemo();
         entity.setId(id);
         entity.setDisabled(1);
         int rInt = baseMapper.updateById(entity);
         return rInt;
     }
 
-    public SysRole selectById(Integer id) {
+    public ZzDemo selectById(Integer id) {
 
         return baseMapper.selectById(id);
 
@@ -130,30 +120,8 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implemen
      * @return
      *
      */
-    public int update(SysRole entity) {
+    public int update(ZzDemo entity) {
         return baseMapper.updateById(entity);
     }
 
-
-    
-    public List<Map<String, Object>> obtainNames() {
-
-        return baseMapper.obtainNames();
-    }
-
-    /**
-     * 自己所拥有的角色
-     * 
-     * @author zivy
-     * @date 2017年8月4日
-     * @describe
-     * @param id
-     * @return
-     *
-     */
-    public Set<Integer> obtainRolesSelf(Integer userId) {
-
-        return sysUserRoleMapper.obtainRoldidBy(userId);
-
-    }
 }

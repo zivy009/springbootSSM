@@ -1,7 +1,11 @@
 package com.zivy009.demo.springbootshirodwz.persistence.dao;
 
-import com.zivy009.demo.springbootshirodwz.persistence.model.SysUser;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Update;
+
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.zivy009.demo.springbootshirodwz.persistence.model.SysUser;
 
 /**
  * <p>
@@ -13,4 +17,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 int countRow();
+@Update(value={"update sys_user set password=#{md5Pwd},salt=#{salt} where id=#{id}"})
+int updPwdDo(Map map);
+
+
 }

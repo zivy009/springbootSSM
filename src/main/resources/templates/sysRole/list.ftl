@@ -1,5 +1,5 @@
  
-<form id="pagerForm" method="post" action="demo/list">
+<form id="pagerForm" method="post" action="sysRole/list">
 	 
 	<input   type="hidden" name="pageNum" value="${((page.pageIndex)!0)}" />
 	<input type="hidden" name="numPerPage" value="${(page.pageSize)!}" />
@@ -9,12 +9,12 @@
  
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="demo/list" method="post">
+	<form onsubmit="return navTabSearch(this);" action="sysRole/list" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
 				<td>
-					名称：<input type="text" name="keyword" value="${(keyword)!}" />
+					名称：<input type="text" name="keyword" />
 				</td>
 			 
 				<td>
@@ -35,15 +35,17 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<@shiro.hasPermission name="sysRole:add">
-			<li><a class="add" href="demo/add" target="dialog" rel="save"><span>添加</span></a></li>
+			<li><a class="add" href="sysRole/add" target="dialog" rel="save"><span>添加</span></a></li>
 			</@shiro.hasPermission>
 			<@shiro.hasPermission name="sysRole:del">
-			<li><a class="delete" href="demo/del?id={sid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="delete" href="sysRole/del?id={sid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 			</@shiro.hasPermission>
 			<@shiro.hasPermission name="sysRole:upd">
-			<li><a class="edit" href="demo/upd?id={sid}" target="dialog"><span>修改</span></a></li>
+			<li><a class="edit" href="sysRole/upd?id={sid}" target="dialog"><span>修改</span></a></li>
 			</@shiro.hasPermission>
+			
 			<li class="line">line</li>
+			<li><a class="edit" href="sysRole/updPermission?id={sid}" target="dialog"><span>分配权限</span></a></li>
 		 </ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">
@@ -62,7 +64,7 @@
 				<td>${a.name!}</td>
 				<td>${a.addtime!?string("yyyy-MM-dd")}</td>
 				<td>
-					<a href="demo/del?id=${a.id}" title="确定要删除这条记录么?"  target="ajaxTodo">删除</a>
+					<a href="sysRole/del?id=${a.id}" title="确定要删除这条记录么?"  target="ajaxTodo">删除</a>
 				</td>
 			</tr>
 			</#list> 

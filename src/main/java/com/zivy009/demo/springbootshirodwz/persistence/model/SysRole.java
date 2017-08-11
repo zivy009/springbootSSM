@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -27,13 +28,34 @@ public class SysRole extends Model<SysRole> {
 	private String name;
 	private String code;
 	private String description;
+	 /**
+     * 1禁用；0否
+     */
+    private Integer disabled;
+    private Date addtime;
     /**
      * 1系统角色；2其他的下发的角色
      */
 	private Integer type;
 
 
-	public Integer getId() {
+	public Integer getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Integer disabled) {
+        this.disabled = disabled;
+    }
+
+    public Date getAddtime() {
+        return addtime;
+    }
+
+    public void setAddtime(Date addtime) {
+        this.addtime = addtime;
+    }
+
+    public Integer getId() {
 		return id;
 	}
 

@@ -2,7 +2,9 @@ package com.zivy009.demo.springbootshirodwz.common.http;
 
 import static org.apache.commons.logging.LogFactory.getLog;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,10 +13,6 @@ import org.apache.commons.logging.Log;
 
 import com.zivy009.demo.springbootshirodwz.common.exception.MyRuntimeException;
 import com.zivy009.demo.springbootshirodwz.common.tools.StringUtil;
-
- 
-
- 
 
 /*******************************************************************************
  * 
@@ -147,6 +145,18 @@ public class RequestUtil {
         boolean isAllowEmpty = false;
         Integer defaultValue = 0;
         return getInteger(request, key, isAllowEmpty, defaultValue);
+    }
+
+    public static List<Integer> getParameterValues(HttpServletRequest request, String key) {
+        List<Integer> t = null;
+        String[] permissionIDS = request.getParameterValues(key);
+        if (permissionIDS != null && permissionIDS.length > 0) {
+            t = new ArrayList<Integer>();
+            for (String item : permissionIDS) {
+                t.add(Integer.parseInt(item));
+            }
+        }
+        return t;
     }
 
     public static Integer getIntegerNotZero(HttpServletRequest request, String key) {
