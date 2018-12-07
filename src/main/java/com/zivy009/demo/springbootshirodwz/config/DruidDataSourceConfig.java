@@ -27,6 +27,7 @@ import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
  * @describe
  */
 @Configuration
+ 
 @EnableTransactionManagement
 /**
  * Druid的DataResource配置类 凡是被Spring管理的类，实现接口 EnvironmentAware 重写方法 setEnvironment

@@ -293,7 +293,7 @@ public class RequestUtil {
         return integer;
     }
 
-    public Long getLong(HttpServletRequest request, String key) throws MyRuntimeException {
+    public static Long getLong(HttpServletRequest request, String key) throws MyRuntimeException {
         Long longs = null;
         try {
             String string = StringUtils.trimToEmpty(request.getParameter(key)).trim();

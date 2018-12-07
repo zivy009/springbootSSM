@@ -151,7 +151,7 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implemen
      * @return
      *
      */
-    public Set<Integer> obtainRolesSelf(Integer userId) {
+    public Set<Integer> obtainRolesSelf(Long userId) {
 
         return sysUserRoleMapper.obtainRoldidBy(userId);
 

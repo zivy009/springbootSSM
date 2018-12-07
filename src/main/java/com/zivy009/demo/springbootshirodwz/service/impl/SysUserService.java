@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.zivy009.demo.springbootshirodwz.common.PageHandler;
 import com.zivy009.demo.springbootshirodwz.common.tools.StringUtil;
@@ -16,7 +18,6 @@ import com.zivy009.demo.springbootshirodwz.persistence.dao.SysUserMapper;
 import com.zivy009.demo.springbootshirodwz.persistence.dao.SysUserRoleMapper;
 import com.zivy009.demo.springbootshirodwz.persistence.model.SysUser;
 import com.zivy009.demo.springbootshirodwz.persistence.tools.CommonMapper;
-import com.zivy009.demo.springbootshirodwz.persistence.tools.other.GenerateSQL;
 import com.zivy009.demo.springbootshirodwz.persistence.tools.other.MysqlGenerateSQL;
 import com.zivy009.demo.springbootshirodwz.service.ISysUserService;
 import com.zivy009.demo.springbootshirodwz.shiro.ShiroKit;
@@ -104,7 +105,7 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
      * @return
      *
      */
-    public int delLogical(Integer id) {
+    public int delLogical(Long id) {
         SysUser entity = new SysUser();
         entity.setId(id);
         entity.setDisabled(1);
@@ -162,10 +163,11 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
     }
 
     public void updRoleDo(Integer userId, String[] roleIds) {
-        Map columnMap = new HashMap();
+        Map<String,Object> columnMap = new HashMap<String,Object>();
         columnMap.put("user_id", userId);
-        int resultInt = userRoleMapper.deleteByMap(columnMap);
-        List<Map> list = new ArrayList<Map>();
+       // int resultInt = 
+                userRoleMapper.deleteByMap(columnMap);
+    //    List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
         if (roleIds == null || roleIds.length < 1) { // 没有任何角色，只执行删除操作
 
         } else {// 先删，后增
@@ -175,12 +177,23 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
             // map.put("role_id", roleid);
             // list.add(map);
             // }
-            Map map = new HashMap();
+            Map<String,Object> map = new HashMap<String,Object>();
             map.put("userId", userId);
             map.put("roleIds", roleIds);
             int resultInt2 = userRoleMapper.batchInsert2(map);
             System.out.println("resultInt2=" + resultInt2);
         }
 
+    }
+
+    public Map<String,Object> obtainLoginName() {
+        SysUser sysUser=new SysUser();
+        sysUser.setId(2L);
+        EntityWrapper<SysUser> wrapper=new EntityWrapper<SysUser>(sysUser);
+        
+    
+       List<Map<String,Object>> list=baseMapper.selectMaps(wrapper);
+        return list.get(0);
+        
     }
 }

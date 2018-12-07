@@ -2,6 +2,7 @@ package com.zivy009.demo.springbootshirodwz.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -50,11 +51,13 @@ public class LoginController extends BaseController<SysUserService> {
     @RequestMapping(value = "/login")
     public String login(Model model, HttpServletRequest httpServletRequest) {
 
-        sysUserService.countRow();
+        Map<String,Object> mapTest= sysUserService.obtainLoginName();
+        model.addAttribute("test", mapTest);
         // 判断session里是否有用户信息
         if (httpServletRequest.getHeader("x-requested-with") != null && httpServletRequest.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) {
             return "redirect:/anon/login/timeout";
         }
+        
         return "login";
     }
 

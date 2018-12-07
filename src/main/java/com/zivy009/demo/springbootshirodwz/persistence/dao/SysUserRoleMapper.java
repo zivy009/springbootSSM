@@ -19,7 +19,7 @@ import com.zivy009.demo.springbootshirodwz.persistence.model.SysUserRole;
  */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
     @Select(value = { "select role_id from sys_user_role where user_id=#{user_id}" })
-    public Set<Integer> obtainRoldidBy(Integer userId);
+    public Set<Integer> obtainRoldidBy(Long userId);
 
     public int batchInsert2(Map map);
     

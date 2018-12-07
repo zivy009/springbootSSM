@@ -78,7 +78,7 @@ public class SysUserController extends BaseController<SysUserService> {
     @RequestMapping("/updRole")
     @RequiresPermissions("sysuser:upd")
     String updRoleView(Model model, HttpServletRequest request) {
-        Integer id = RequestUtil.getInteger(request, "id");
+        Long id = RequestUtil.getLong(request, "id");
         if (id == null) {
             throw new MyRuntimeException("参数空！！！");
         }
@@ -220,7 +220,7 @@ public class SysUserController extends BaseController<SysUserService> {
      */
     @RequestMapping(value = "/del")
     @ResponseBody
-    String del(@RequestParam(value = "id", defaultValue = "0") Integer id) {
+    String del(@RequestParam(value = "id", defaultValue = "0") Long id) {
         String jsonReturn = this.ajaxDelSuccess();
         try {
             int returnInt = baseService.delLogical(id);

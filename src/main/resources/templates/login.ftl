@@ -30,7 +30,7 @@
 			<div class="loginForm">
 				<form action="${ctx.contextPath}/loginDo">
 					<p>
-						<label>用户名：</label>
+						<label>用户名：${(test.login_name)!}||${(test.loginName)!}</label>
 						<input type="text" name="username" size="20" value="admin" class="login_input" />
 					</p>
 					<p>
